@@ -16,6 +16,7 @@ public class Prompts {
     public static int promptForMenuOption() {
         Messages.displayMenu();
 
+        // TODO: Validate input (should only be an int)
         int option = scanner.nextInt();
         scanner.nextLine();
 
@@ -144,6 +145,7 @@ public class Prompts {
     public static String promptForRole() {
         System.out.print("Enter a role: ");
 
+        // TODO: Validate input (can't be empty)
         return scanner.nextLine();
     }
 
@@ -155,6 +157,7 @@ public class Prompts {
     public static String promptForUpdatedRole() {
         System.out.print("Enter the updated role: ");
 
+        // TODO: Validate input (can't be empty)
         return scanner.nextLine();
     }
 }
