@@ -91,11 +91,11 @@ public class CompanyManager {
      * corresponding employee if they exist.
      */
     public static void updateRole() {
-        String id = Prompts.promptForId();
+        String id = Prompts.promptForUpdateRoleId();
         Employee employee = getEmployeeById(id);
 
         if (employee != null) {
-            String role = Prompts.promptForRole();
+            String role = Prompts.promptForUpdatedRole();
             employee.setRole(role);
         }
     }
@@ -105,11 +105,11 @@ public class CompanyManager {
      * corresponding employee if they exist.
      */
     public static void updateSalary() {
-        String id = Prompts.promptForId();
+        String id = Prompts.promptForUpdateSalaryId();
         Employee employee = getEmployeeById(id);
 
         if (employee != null) {
-            double salary = Prompts.promptForSalary();
+            double salary = Prompts.promptForUpdatedSalary();
             employee.setSalary(salary);
         }
     }
@@ -129,8 +129,8 @@ public class CompanyManager {
         }
 
         String name = Prompts.promptForName();
-        double salary = Prompts.promptForSalary();
         String role = Prompts.promptForRole();
+        double salary = Prompts.promptForSalary();
 
         return new Employee(id, name, salary, role);
     }

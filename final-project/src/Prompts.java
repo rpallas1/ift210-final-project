@@ -38,6 +38,20 @@ public class Prompts {
     }
 
     /**
+     * Prompts the user to enter an ID.
+     * 
+     * @return a String representing the ID entered by the user
+     */
+    public static String promptForId() {
+        System.out.print("Enter an id: ");
+
+        String id = scanner.next();
+        scanner.nextLine();
+
+        return id;
+    }
+
+    /**
      * Prompts the user to enter an ID, with the option to return to the menu by
      * entering 0.
      * 
@@ -53,12 +67,26 @@ public class Prompts {
     }
 
     /**
-     * Prompts the user to enter an ID.
+     * Prompts the user to enter an ID of the employee having its role updated.
      * 
      * @return a String representing the ID entered by the user
      */
-    public static String promptForId() {
-        System.out.print("Enter an id: ");
+    public static String promptForUpdateRoleId() {
+        System.out.print("Enter ID of employee to update role: ");
+
+        String id = scanner.next();
+        scanner.nextLine();
+
+        return id;
+    }
+
+    /**
+     * Prompts the user to enter an ID of the employee having its salary updated.
+     * 
+     * @return a String representing the ID entered by the user
+     */
+    public static String promptForUpdateSalaryId() {
+        System.out.print("Enter ID of employee to update salary: ");
 
         String id = scanner.next();
         scanner.nextLine();
@@ -74,6 +102,7 @@ public class Prompts {
     public static String promptForName() {
         System.out.print("Enter a name: ");
 
+        // TODO: Validate name
         return scanner.nextLine();
     }
 
@@ -85,7 +114,22 @@ public class Prompts {
     public static double promptForSalary() {
         System.out.print("Enter a salary: ");
 
-        // TODO: Handle if input isn't a double
+        // TODO: Validate salary
+        double salary = scanner.nextDouble();
+        scanner.nextLine();
+
+        return salary;
+    }
+
+    /**
+     * Prompts the user to enter an updated salary.
+     * 
+     * @return a double representing the salary entered by the user
+     */
+    public static double promptForUpdatedSalary() {
+        System.out.print("Enter the updated salary: ");
+
+        // TODO: Validate salary
         double salary = scanner.nextDouble();
         scanner.nextLine();
 
@@ -99,6 +143,17 @@ public class Prompts {
      */
     public static String promptForRole() {
         System.out.print("Enter a role: ");
+
+        return scanner.nextLine();
+    }
+
+    /**
+     * Prompts the user to enter a role.
+     * 
+     * @return a String representing the role entered by the user
+     */
+    public static String promptForUpdatedRole() {
+        System.out.print("Enter the updated role: ");
 
         return scanner.nextLine();
     }
