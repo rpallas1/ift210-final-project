@@ -1,5 +1,8 @@
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
 
 /**
  * Manages employee data within a Company Management System, allowing
@@ -8,7 +11,8 @@ import java.util.ArrayList;
  * prompts and message displays.
  */
 public class CompanyManager {
-    private static ArrayList<Employee> employeeList = new ArrayList<Employee>();
+    protected static ArrayList<Employee> employeeList = new ArrayList<Employee>();
+    protected static Scanner scanner = new Scanner(System.in);
 
     /**
      * Entry point of the application.
@@ -25,114 +29,46 @@ public class CompanyManager {
      */
     public static void start() {
         int option = -1;
+        HandlerInterface currentTask = null;
 
-        Messages.menuHeader();
+        menuHeader();
 
         while (option != 0) {
-            option = Prompts.promptForMenuOption();
+            currentTask = null;
+            option = promptForMenuOption();
 
             switch (option) {
                 case 0:
-                    Messages.menuExited();
+                    menuExited();
                     break;
                 case 1:
-                    addEmployee();
+                    currentTask = new AddEmployeeHandler();
                     break;
                 case 2:
-                    removeEmployee();
+                    currentTask = new RemoveEmployeeHandler();
                     break;
                 case 3:
-                    updateRole();
+                    currentTask = new UpdateRoleHandler();
                     break;
                 case 4:
-                    updateSalary();
+                    currentTask = new UpdateSalaryHandler();
                     break;
                 case 5:
-                    Messages.displayEmployeeList(employeeList);
+                    displayEmployeeList();
                     break;
                 case 6:
-                    Messages.displaySalaryReport(employeeList);
+                    displaySalaryReport();
                     break;
                 default:
-                    Messages.invalidMenuOption();
+                    invalidInput();
+            }
+
+            if (currentTask != null) {
+                currentTask.execute();
             }
         }
-    }
 
-    /**
-     * Prompts the user to create a new employee and adds them to the employee list
-     * if the creation is successful.
-     */
-    public static void addEmployee() {
-        Employee employee = createEmployee();
-
-        if (employee != null) {
-            employeeList.add(employee);
-            Messages.addEmployeeConfirmation();
-        }
-    }
-
-    /**
-     * Prompts the user to enter an employee ID, removes the corresponding employee
-     * if they exist, and displays a confirmation message.
-     */
-    public static void removeEmployee() {
-        String id = Prompts.removeEmployeePrompt();
-        Employee employee = getEmployeeById(id);
-
-        if (employee != null) {
-            employeeList.remove(employee);
-            Messages.removeEmployeeConfirmation();
-        }
-    }
-
-    /**
-     * Prompts the user to enter an employee ID and updates the role of the
-     * corresponding employee if they exist.
-     */
-    public static void updateRole() {
-        String id = Prompts.promptForUpdateRoleId();
-        Employee employee = getEmployeeById(id);
-
-        if (employee != null) {
-            String role = Prompts.promptForUpdatedRole();
-            employee.setRole(role);
-        }
-    }
-
-    /**
-     * Prompts the user to enter an employee ID and updates the salary of the
-     * corresponding employee if they exist.
-     */
-    public static void updateSalary() {
-        String id = Prompts.promptForUpdateSalaryId();
-        Employee employee = getEmployeeById(id);
-
-        if (employee != null) {
-            double salary = Prompts.promptForUpdatedSalary();
-            employee.setSalary(salary);
-        }
-    }
-
-    /**
-     * Creates and returns a new Employee object by prompting the user for unique
-     * ID, name, salary, and role details.
-     * 
-     * @return a new Employee object, or null if the ID is not unique or the user
-     *         decides to cancel
-     */
-    private static Employee createEmployee() {
-        String id = askForUniqueId();
-
-        if (id == null) {
-            return null;
-        }
-
-        String name = Prompts.promptForName();
-        String role = Prompts.promptForRole();
-        double salary = Prompts.promptForSalary();
-
-        return new Employee(id, name, salary, role);
+        scanner.close();
     }
 
     /**
@@ -141,54 +77,198 @@ public class CompanyManager {
      * @param id the ID of the employee to search for
      * @return the Employee with the specified ID, or null if no employee is found
      */
-    private static Employee getEmployeeById(String id) {
+    protected Employee getEmployeeById(String id) {
         for (int i = 0; i < employeeList.size(); i++) {
             if (employeeList.get(i).getEmployeeID().equals(id)) {
                 return employeeList.get(i);
             }
         }
 
-        Messages.employeeDoesNotExist(id);
+        employeeDoesNotExist(id);
         return null;
     }
 
     /**
-     * Checks if an employee with the specified ID already exists.
+     * Displays a message indicating that no employee exists for the specified ID.
      * 
-     * @param id the ID to check for existence in the employee list
-     * @return true if an employee with the ID exists, false otherwise
+     * @param id the employee ID that was not found
      */
-    private static boolean doesEmployeeExist(String id) {
-        for (Employee employee : employeeList) {
-            if (employee.getEmployeeID().equals(id)) {
-                return true;
-            }
-        }
-
-        return false;
+    private static void employeeDoesNotExist(String id) {
+        divider();
+        System.out.printf("No employee exists for ID: %s\n", id);
+        divider();
     }
 
     /**
-     * Prompts the user to enter a unique employee ID and validates its uniqueness.
-     * Allows the user to enter "0" to exit without providing an ID.
-     * 
-     * @return a unique employee ID, or null if the user decides to exit
+     * Displays the menu header with author information and system title.
      */
-    private static String askForUniqueId() {
-        String id = Prompts.promptForUniqueId();
-        boolean doesIdExist = doesEmployeeExist(id);
-        String exitString = "0";
+    private static void menuHeader() {
+        divider();
+        System.out.println("Ryan Pallas - 1226061293");
+        divider();
+        System.out.println("Company Management System");
+        divider();
+    }
 
-        while (!id.equals(exitString) && doesIdExist) {
-            Messages.addEmployeeError(id);
-            id = Prompts.promptForUniqueId();
-            doesIdExist = doesEmployeeExist(id);
+    /**
+     * Prompts the user to select a menu option by displaying available options.
+     * 
+     * @return the integer selected by the user representing the chosen menu option
+     */
+    private static int promptForMenuOption() {
+        displayMenu();
+
+        // TODO: Validate input (should only be an int)
+        int option = scanner.nextInt();
+        scanner.nextLine();
+
+        return option;
+    }
+
+    /**
+     * Displays the main menu options for the user.
+     */
+    private static void displayMenu() {
+        System.out.println("0 - Exit");
+        System.out.println("1 - Add Employee");
+        System.out.println("2 - Remove Employee");
+        System.out.println("3 - Update Employee Role");
+        System.out.println("4 - Update Employee Salary");
+        System.out.println("5 - Display Employee List");
+        System.out.println("6 - Display Salary Report");
+        System.out.print("Enter option (0 to 6): ");
+    }
+
+    /**
+     * Displays a message indicating that the menu has been exited.
+     */
+    private static void menuExited() {
+        divider();
+        System.out.println("Company Manager Exited");
+        divider();
+    }
+
+    /**
+     * Displays a message indicating that an invalid menu option was chosen.
+     */
+    private static void invalidInput() {
+        divider();
+        System.out.println("Invalid option, please enter a number 0 to 6.");
+        divider();
+    }
+
+    /**
+     * Displays a formatted list of all employees in the system.
+     */
+    private static void displayEmployeeList() {
+        dashDivider();
+        System.out.printf("%-25sEmployee List\n", " ");
+        dashDivider();
+
+        employeeTable();
+    }
+
+    /**
+     * Displays a salary report with the total salary of all employees.
+     */
+    private static void displaySalaryReport() {
+        double totalSalary = 0;
+
+        for (Employee employee : employeeList) {
+            totalSalary += employee.getSalary();
         }
 
-        if (id.equals(exitString)) {
-            return null;
+        // TODO: Sort employees by salary and pass it into employeeTable()
+
+        dashDivider();
+        System.out.printf("%-25sSalary Report\n", " ");
+        dashDivider();
+
+        employeeTable();
+
+        System.out.printf("Total Salary: %.1f\n", totalSalary);
+    }
+
+    /**
+     * Displays a table of employee information with ID, name, role, and salary.
+     */
+    private static void employeeTable() {
+        tableRow("ID", "Name", "Role", "Salary");
+        dashDivider();
+
+        if (employeeList.size() == 0) {
+            System.out.printf("|%-22sNo employees in list%-19s|\n", " ", " ");
+        } else {
+            for (Employee employee : employeeList) {
+                tableRow(employee.getEmployeeID(),
+                        employee.getEmployeeName(),
+                        employee.getRole(),
+                        employee.getSalary());
+            }
         }
 
-        return id;
+        dashDivider();
+    }
+
+    /**
+     * Formats and displays a row in the employee table with ID, name, role, and
+     * salary.
+     * 
+     * @param id     the employee ID
+     * @param name   the employee's name
+     * @param role   the employee's role
+     * @param salary the employee's salary
+     */
+    private static void tableRow(String id, String name, String role, double salary) {
+        System.out.printf("| %-10s | %-15s | %-15s | %-12.2f |\n", id, name, role, salary);
+    }
+
+    /**
+     * Formats and displays the header row in the employee table with ID, Name,
+     * Role, and Salary as a String.
+     * 
+     * @param id     column header for id's
+     * @param name   column header for name's
+     * @param role   column header for role's
+     * @param salary column header for salaries
+     */
+    private static void tableRow(String id, String name, String role, String salary) {
+        System.out.printf("| %-10s | %-15s | %-15s | %-12s |\n", id, name, role, salary);
+    }
+
+    /**
+     * Displays a divider made of "-" characters.
+     */
+    private static void dashDivider() {
+        System.out.println("-".repeat(65));
+    }
+
+    /**
+     * Displays a divider made of "=" characters.
+     */
+    public static void divider() {
+        System.out.println("=".repeat(35));
+    }
+
+    /**
+     * Displays the current date and time in a formatted string with dividers.
+     */
+    protected static void currentDateAndTime() {
+        divider();
+        System.out.printf("Current time: %s\n", getDateAndTime());
+        divider();
+    }
+
+    /**
+     * Returns the current date and time as a formatted string.
+     * 
+     * @return a String representing the current date and time in the format
+     *         "MM/dd/yyyy HH:mm:ss"
+     */
+    private static String getDateAndTime() {
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String currentDate = dateFormat.format(date);
+        return currentDate;
     }
 }

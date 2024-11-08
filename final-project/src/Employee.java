@@ -120,11 +120,6 @@ class Employee {
         this.role = role;
     }
 
-    // public void tableRow() {
-    // System.out.printf("| %-10s | %-15s | %-15s | %-12.2f |\n", employeeID,
-    // employeeName, role, salary);
-    // }
-
     /**
      * Returns a string representation of the employee, including ID, name, salary,
      * and role, formatted as "Employee [employeeID=..., employeeName=...,
