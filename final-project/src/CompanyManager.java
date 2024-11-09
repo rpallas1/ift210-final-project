@@ -1,7 +1,5 @@
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -11,47 +9,48 @@ import java.util.Scanner;
  * prompts and message displays.
  */
 public class CompanyManager {
-    protected static ArrayList<Employee> employeeList = new ArrayList<Employee>();
-    protected static Scanner scanner = new Scanner(System.in);
-
     /**
      * Entry point of the application.
      * 
      * @param args command-line arguments (not-used)
      */
     public static void main(String[] args) {
-        start();
+        Scanner scanner = new Scanner(System.in);
+
+        start(scanner);
+
+        scanner.close();
     }
 
     /**
      * Starts the main program loop, displaying menu options and handling user
      * selection until the user chooses to exit.
      */
-    public static void start() {
+    public static void start(Scanner scanner) {
         int option = -1;
-        HandlerInterface currentTask = null;
+        Executor currentTask = null;
 
         menuHeader();
 
         while (option != 0) {
             currentTask = null;
-            option = promptForMenuOption();
+            option = promptForMenuOption(scanner);
 
             switch (option) {
                 case 0:
                     menuExited();
                     break;
                 case 1:
-                    currentTask = new AddEmployeeHandler();
+                    currentTask = new AddEmployeeTask(scanner);
                     break;
                 case 2:
-                    currentTask = new RemoveEmployeeHandler();
+                    currentTask = new RemoveEmployeeTask(scanner);
                     break;
                 case 3:
-                    currentTask = new UpdateRoleHandler();
+                    currentTask = new UpdateRoleTask(scanner);
                     break;
                 case 4:
-                    currentTask = new UpdateSalaryHandler();
+                    currentTask = new UpdateSalaryTask(scanner);
                     break;
                 case 5:
                     displayEmployeeList();
@@ -67,36 +66,6 @@ public class CompanyManager {
                 currentTask.execute();
             }
         }
-
-        scanner.close();
-    }
-
-    /**
-     * Searches and returns an employee with the specified ID.
-     * 
-     * @param id the ID of the employee to search for
-     * @return the Employee with the specified ID, or null if no employee is found
-     */
-    protected Employee getEmployeeById(String id) {
-        for (int i = 0; i < employeeList.size(); i++) {
-            if (employeeList.get(i).getEmployeeID().equals(id)) {
-                return employeeList.get(i);
-            }
-        }
-
-        employeeDoesNotExist(id);
-        return null;
-    }
-
-    /**
-     * Displays a message indicating that no employee exists for the specified ID.
-     * 
-     * @param id the employee ID that was not found
-     */
-    private static void employeeDoesNotExist(String id) {
-        divider();
-        System.out.printf("No employee exists for ID: %s\n", id);
-        divider();
     }
 
     /**
@@ -115,7 +84,7 @@ public class CompanyManager {
      * 
      * @return the integer selected by the user representing the chosen menu option
      */
-    private static int promptForMenuOption() {
+    private static int promptForMenuOption(Scanner scanner) {
         displayMenu();
 
         // TODO: Validate input (should only be an int)
@@ -165,34 +134,28 @@ public class CompanyManager {
         System.out.printf("%-25sEmployee List\n", " ");
         dashDivider();
 
-        employeeTable();
+        employeeTable(DataManager.getInstance().getEmployees());
     }
 
     /**
      * Displays a salary report with the total salary of all employees.
      */
     private static void displaySalaryReport() {
-        double totalSalary = 0;
-
-        for (Employee employee : employeeList) {
-            totalSalary += employee.getSalary();
-        }
-
-        // TODO: Sort employees by salary and pass it into employeeTable()
+        DataManager dataManager = DataManager.getInstance();
 
         dashDivider();
         System.out.printf("%-25sSalary Report\n", " ");
         dashDivider();
 
-        employeeTable();
+        employeeTable(dataManager.getEmployeesSortedBySalary());
 
-        System.out.printf("Total Salary: %.1f\n", totalSalary);
+        System.out.printf("Total Salary: %.1f\n", dataManager.getTotalSalary());
     }
 
     /**
      * Displays a table of employee information with ID, name, role, and salary.
      */
-    private static void employeeTable() {
+    private static void employeeTable(ArrayList<Employee> employeeList) {
         tableRow("ID", "Name", "Role", "Salary");
         dashDivider();
 
@@ -200,27 +163,11 @@ public class CompanyManager {
             System.out.printf("|%-22sNo employees in list%-19s|\n", " ", " ");
         } else {
             for (Employee employee : employeeList) {
-                tableRow(employee.getEmployeeID(),
-                        employee.getEmployeeName(),
-                        employee.getRole(),
-                        employee.getSalary());
+                employee.tableRow();
             }
         }
 
         dashDivider();
-    }
-
-    /**
-     * Formats and displays a row in the employee table with ID, name, role, and
-     * salary.
-     * 
-     * @param id     the employee ID
-     * @param name   the employee's name
-     * @param role   the employee's role
-     * @param salary the employee's salary
-     */
-    private static void tableRow(String id, String name, String role, double salary) {
-        System.out.printf("| %-10s | %-15s | %-15s | %-12.2f |\n", id, name, role, salary);
     }
 
     /**
@@ -248,27 +195,5 @@ public class CompanyManager {
      */
     public static void divider() {
         System.out.println("=".repeat(35));
-    }
-
-    /**
-     * Displays the current date and time in a formatted string with dividers.
-     */
-    protected static void currentDateAndTime() {
-        divider();
-        System.out.printf("Current time: %s\n", getDateAndTime());
-        divider();
-    }
-
-    /**
-     * Returns the current date and time as a formatted string.
-     * 
-     * @return a String representing the current date and time in the format
-     *         "MM/dd/yyyy HH:mm:ss"
-     */
-    private static String getDateAndTime() {
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        String currentDate = dateFormat.format(date);
-        return currentDate;
     }
 }

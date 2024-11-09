@@ -16,21 +16,26 @@ class Employee {
     private String employeeName;
 
     /**
-     * Salary of the employee.
-     */
-    private double salary;
-
-    /**
      * Role or job title of the employee.
      */
     private String role;
 
     /**
-     * Default constructor that initializes an employee with default
-     * values for each attribute.
+     * Salary of the employee.
+     */
+    private double salary;
+
+    /**
+     * 
      */
     public Employee() {
-        this("", "", -1.0, "");
+    }
+
+    /**
+     * @param id
+     */
+    public Employee(String id) {
+        employeeID = id;
     }
 
     /**
@@ -41,11 +46,11 @@ class Employee {
      * @param salary       the salary of the employee
      * @param role         the role or job title of the employee
      */
-    public Employee(String employeeID, String employeeName, double salary, String role) {
+    public Employee(String employeeID, String employeeName, String role, double salary) {
         this.employeeID = employeeID;
         this.employeeName = employeeName;
-        this.salary = salary;
         this.role = role;
+        this.salary = salary;
     }
 
     /**
@@ -121,6 +126,19 @@ class Employee {
     }
 
     /**
+     * Formats and displays a row in the employee table with ID, name, role, and
+     * salary.
+     * 
+     * @param id     the employee ID
+     * @param name   the employee's name
+     * @param role   the employee's role
+     * @param salary the employee's salary
+     */
+    public void tableRow() {
+        System.out.printf("| %-10s | %-15s | %-15s | %-12.2f |\n", employeeID, employeeName, role, salary);
+    }
+
+    /**
      * Returns a string representation of the employee, including ID, name, salary,
      * and role, formatted as "Employee [employeeID=..., employeeName=...,
      * salary=..., role=...]".
@@ -134,11 +152,10 @@ class Employee {
     }
 
     /**
-     * Compares this employee to the specified object for equality. Two employees
-     * are considered equal if they have the same ID, name, salary, and role.
+     * Two Employees are considered equal if they have the same ID.
      * 
-     * @param obj the object to compare to
-     * @return true if the employees are equal, false otherwise
+     * @param obj any object to compare against this Employee
+     * @return true if they are equal, false otherwise
      */
     @Override
     public boolean equals(Object obj) {
@@ -154,18 +171,7 @@ class Employee {
                 return false;
         } else if (!employeeID.equals(other.employeeID))
             return false;
-        if (employeeName == null) {
-            if (other.employeeName != null)
-                return false;
-        } else if (!employeeName.equals(other.employeeName))
-            return false;
-        if (Double.doubleToLongBits(salary) != Double.doubleToLongBits(other.salary))
-            return false;
-        if (role == null) {
-            if (other.role != null)
-                return false;
-        } else if (!role.equals(other.role))
-            return false;
         return true;
     }
+
 }
