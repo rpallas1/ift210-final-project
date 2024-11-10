@@ -1,13 +1,21 @@
+package tasks;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-public abstract class Task implements Executor {
+import exceptions.InputException;
+import exceptions.MenuExitedException;
+import helpers.InputValidator;
+
+public abstract class Task {
     private Scanner scanner;
 
     public Task(Scanner scanner) {
         this.scanner = scanner;
     }
+
+    public abstract void execute();
 
     /**
      * Prompts the user to enter a valid ID for a Employee and will continue to
@@ -17,29 +25,22 @@ public abstract class Task implements Executor {
      * @return
      * @throws Exception
      */
-    protected String promptForId(String message) throws Exception {
+    protected String promptForId(String message) throws MenuExitedException {
         String id = "";
         InputValidator validator = new InputValidator();
         boolean isValid = false;
-        String exitString = "0";
 
         message = prepMessage(message);
 
-        while (!id.equals(exitString) && !isValid) {
+        while (!isValid) {
             try {
                 System.out.print(message);
                 id = scanner.nextLine();
                 id = validator.validateId(id);
                 isValid = true;
-            } catch (Exception e) {
-                // Non-valid ID entered, repeat while-loop
-                System.out.println(">>> Please enter a valid ID");
+            } catch (InputException ie) {
+                System.out.printf(">>> Invalid ID - %s\n", ie.getMessage());
             }
-        }
-
-        // User wants to exit to main menu
-        if (id.equals(exitString)) {
-            throw new Exception();
         }
 
         return id;
@@ -53,29 +54,22 @@ public abstract class Task implements Executor {
      * @return
      * @throws Exception
      */
-    protected String promptForName(String message) throws Exception {
+    protected String promptForName(String message) throws MenuExitedException {
         String name = "";
         InputValidator validator = new InputValidator();
         boolean isValid = false;
-        String exitString = "0";
 
         message = prepMessage(message);
 
-        while (!name.equals(exitString) && !isValid) {
+        while (!isValid) {
             try {
                 System.out.print(message);
                 name = scanner.nextLine();
                 name = validator.validateName(name);
                 isValid = true;
-            } catch (Exception e) {
-                // Non-valid ID entered, repeat while-loop
-                System.out.println(">>> Please enter a valid name");
+            } catch (InputException ie) {
+                System.out.printf(">>> Invalid name - %s\n", ie.getMessage());
             }
-        }
-
-        // User wants to exit to main menu
-        if (name.equals(exitString)) {
-            throw new Exception();
         }
 
         return name;
@@ -89,29 +83,22 @@ public abstract class Task implements Executor {
      * @return
      * @throws Exception
      */
-    protected String promptForRole(String message) throws Exception {
+    protected String promptForRole(String message) throws MenuExitedException {
         String role = "";
         InputValidator validator = new InputValidator();
         boolean isValid = false;
-        String exitString = "0";
 
         message = prepMessage(message);
 
-        while (!role.equals(exitString) && !isValid) {
+        while (!isValid) {
             try {
                 System.out.print(message);
                 role = scanner.nextLine();
                 role = validator.validateRole(role);
                 isValid = true;
-            } catch (Exception e) {
-                // Non-valid ID entered, repeat while-loop
-                System.out.println(">>> Please enter a valid role");
+            } catch (InputException ie) {
+                System.out.printf(">>> Invalid role - %s\n", ie.getMessage());
             }
-        }
-
-        // User wants to exit to main menu
-        if (role.equals(exitString)) {
-            throw new Exception();
         }
 
         return role;
@@ -125,30 +112,23 @@ public abstract class Task implements Executor {
      * @return
      * @throws Exception
      */
-    protected Double promptForSalary(String message) throws Exception {
+    protected Double promptForSalary(String message) throws MenuExitedException {
         String salary = "";
         double validatedSalary = -1;
         InputValidator validator = new InputValidator();
         boolean isValid = false;
-        String exitString = "0";
 
         message = prepMessage(message);
 
-        while (!salary.equals(exitString) && !isValid) {
+        while (!isValid) {
             try {
                 System.out.print(message);
                 salary = scanner.nextLine();
                 validatedSalary = validator.validateSalary(salary);
                 isValid = true;
-            } catch (Exception e) {
-                // Non-valid ID entered, repeat while-loop
-                System.out.println(">>> Please enter a valid salary");
+            } catch (InputException ie) {
+                System.out.printf(">>> Invalid salary - %s\n", ie.getMessage());
             }
-        }
-
-        // User wants to exit to main menu
-        if (salary.equals(exitString)) {
-            throw new Exception();
         }
 
         return validatedSalary;
@@ -159,9 +139,21 @@ public abstract class Task implements Executor {
      * 
      * @param id the employee ID that was not found
      */
-    protected void employeeDoesNotExist(String id) {
+    protected void employeeDoesNotExistMessage(String id) {
         divider();
         System.out.printf("No employee exists for ID: %s\n", id);
+        divider();
+    }
+
+    protected void menuExitedMessage(String message) {
+        divider();
+        System.out.println(message);
+        divider();
+    }
+
+    protected void taskFailedMessage(String message) {
+        divider();
+        System.out.println(message);
         divider();
     }
 
@@ -195,6 +187,6 @@ public abstract class Task implements Executor {
     }
 
     private String prepMessage(String message) {
-        return message.trim() + " (Enter 0 to return to menu): ";
+        return message.trim() + " (Enter q to return to menu): ";
     }
 }

@@ -1,5 +1,10 @@
+package tasks;
 
 import java.util.Scanner;
+
+import models.Employee;
+import exceptions.MenuExitedException;
+import managers.DataManager;
 
 public class UpdateRoleTask extends Task {
     public UpdateRoleTask(Scanner scanner) {
@@ -24,16 +29,22 @@ public class UpdateRoleTask extends Task {
                     doesEmployeeExist = true;
                     String role = promptForRole("Enter the updated role");
                     employee.setRole(role);
-                    // DataManager.getInstance().updateEmployeeRole(employee, role);
+
+                    if (DataManager.getInstance().updateEmployee(employee) != null) {
+                        divider();
+                        System.out.println("Employee role updated successfully");
+                        currentDateAndTime();
+                    } else {
+                        taskFailedMessage("Failed to update role");
+                    }
                 } else {
-                    employeeDoesNotExist(id);
+                    employeeDoesNotExistMessage(id);
                 }
-            } catch (Exception e) {
-                // If error is caught then that means that the user chose to exit the loop of
-                // entering valid input
-                doesEmployeeExist = true;
+            } catch (MenuExitedException mee) {
+                menuExitedMessage(mee.getMessage());
+
+                break;
             }
         }
-
     }
 }

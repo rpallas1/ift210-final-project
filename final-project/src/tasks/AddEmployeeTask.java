@@ -1,5 +1,10 @@
+package tasks;
 
 import java.util.Scanner;
+
+import models.Employee;
+import exceptions.MenuExitedException;
+import managers.DataManager;
 
 public class AddEmployeeTask extends Task {
     public AddEmployeeTask(Scanner scanner) {
@@ -16,14 +21,15 @@ public class AddEmployeeTask extends Task {
         try {
             Employee employee = createEmployee();
 
-            DataManager.getInstance().addEmployee(employee);
-
-            divider();
-            System.out.println("Employee added successfully");
-            currentDateAndTime();
-        } catch (Exception e) {
-            // If error is caught then that means that the user chose to exit the loop of
-            // entering valid input
+            if (DataManager.getInstance().addEmployee(employee)) {
+                divider();
+                System.out.println("Employee added successfully");
+                currentDateAndTime();
+            } else {
+                taskFailedMessage("Failed to add employee");
+            }
+        } catch (MenuExitedException mee) {
+            menuExitedMessage(mee.getMessage());
         }
     }
 
@@ -35,7 +41,7 @@ public class AddEmployeeTask extends Task {
      * @return a new Employee object, or null if the user cancels or ID is not
      *         unique
      */
-    private Employee createEmployee() throws Exception {
+    private Employee createEmployee() throws MenuExitedException {
         Employee employee = new Employee(
                 askForUniqueId(),
                 promptForName("Enter a name"),
@@ -51,23 +57,18 @@ public class AddEmployeeTask extends Task {
      * 
      * @return a unique employee ID, or null if the user decides to exit
      */
-    private String askForUniqueId() throws Exception {
+    private String askForUniqueId() throws MenuExitedException {
         String promptMessage = "Enter a unique id";
         String id = promptForId(promptMessage);
         boolean doesIdExist = doesEmployeeExist(id);
-        String exitString = "0";
 
-        while (!id.equals(exitString) && doesIdExist) {
+        while (doesIdExist) {
             divider();
             System.out.printf("ID must be unique: %s\n", id);
             divider();
 
             id = promptForId(promptMessage);
             doesIdExist = doesEmployeeExist(id);
-        }
-
-        if (id.equals(exitString)) {
-            throw new Exception();
         }
 
         return id;

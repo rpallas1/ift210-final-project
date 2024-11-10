@@ -1,5 +1,10 @@
+package tasks;
 
 import java.util.Scanner;
+
+import models.Employee;
+import exceptions.MenuExitedException;
+import managers.DataManager;
 
 public class RemoveEmployeeTask extends Task {
     public RemoveEmployeeTask(Scanner scanner) {
@@ -24,18 +29,20 @@ public class RemoveEmployeeTask extends Task {
                 if (employee != null) {
                     doesEmployeeExist = true;
 
-                    DataManager.getInstance().removeEmployee(employee);
-
-                    divider();
-                    System.out.println("Employee removed successfully");
-                    currentDateAndTime();
+                    if (DataManager.getInstance().removeEmployee(employee)) {
+                        divider();
+                        System.out.println("Employee removed successfully");
+                        currentDateAndTime();
+                    } else {
+                        taskFailedMessage("Failed to remove employee");
+                    }
                 } else {
-                    employeeDoesNotExist(id);
+                    employeeDoesNotExistMessage(id);
                 }
-            } catch (Exception e) {
-                // If error is caught then that means that the user chose to exit the loop of
-                // entering valid input
-                doesEmployeeExist = true;
+            } catch (MenuExitedException mee) {
+                menuExitedMessage(mee.getMessage());
+
+                break;
             }
         }
     }

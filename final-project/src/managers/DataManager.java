@@ -1,4 +1,7 @@
+package managers;
+
 import java.util.ArrayList;
+import models.Employee;
 
 public class DataManager {
     private static DataManager instance = null;
@@ -15,44 +18,23 @@ public class DataManager {
         return instance;
     }
 
-    /**
-     * Adds an employee to the employeeList.
-     * 
-     * @param employee the employee to be added to the list
-     */
-    public void addEmployee(Employee employee) {
-        employeeList.add(employee);
+    public boolean addEmployee(Employee employee) {
+        return employeeList.add(employee);
     }
 
-    /**
-     * Removes an employee from the employeeList.
-     * 
-     * @param employee the employee to be removed from the list
-     */
-    public void removeEmployee(Employee employee) {
-        employeeList.remove(employee);
+    public boolean removeEmployee(Employee employee) {
+        return employeeList.remove(employee);
     }
 
-    /**
-     * Updates the role of an employee.
-     * 
-     * @param employee the employee having its role updated
-     * @param role     a String representing the role that will be used to update
-     *                 the employee
-     */
-    public void updateEmployeeRole(Employee employee, String role) {
-        employee.setRole(role);
-    }
+    public Employee updateEmployee(Employee employee) {
+        int index = employeeList.indexOf(employee);
 
-    /**
-     * Updates the salary of an employee.
-     * 
-     * @param employee the employee having its salary updated
-     * @param salary   a double representing the salary that will be used to update
-     *                 the employee
-     */
-    public void updateEmployeeSalary(Employee employee, double salary) {
-        employee.setSalary(salary);
+        if (index >= 0) {
+            employeeList.set(index, employee);
+            return employee;
+        }
+
+        return null;
     }
 
     /**
@@ -66,7 +48,7 @@ public class DataManager {
         int index = employeeList.indexOf(employee);
 
         if (index >= 0) {
-            return employeeList.get(index);
+            return new Employee(employeeList.get(index));
         }
 
         return null;
@@ -95,10 +77,9 @@ public class DataManager {
         ArrayList<Employee> sortedList = new ArrayList<>(employeeList);
         int length = employeeList.size();
 
-        // Bubble sort
         for (int i = 0; i < length - 1; i++) {
             for (int j = 0; j < length - i - 1; j++) {
-                if (sortedList.get(j).getSalary() > sortedList.get(j + 1).getSalary()) {
+                if (sortedList.get(j).getSalary() < sortedList.get(j + 1).getSalary()) {
                     Employee temp = sortedList.get(j);
                     sortedList.set(j, sortedList.get(j + 1));
                     sortedList.set(j + 1, temp);

@@ -1,5 +1,10 @@
+package tasks;
 
 import java.util.Scanner;
+
+import exceptions.MenuExitedException;
+import managers.DataManager;
+import models.Employee;
 
 public class UpdateSalaryTask extends Task {
     public UpdateSalaryTask(Scanner scanner) {
@@ -24,14 +29,21 @@ public class UpdateSalaryTask extends Task {
                     doesEmployeeExist = true;
                     double salary = promptForSalary("Enter the updated salary");
                     employee.setSalary(salary);
-                    // DataManager.getInstance().updateEmployeeSalary(employee, salary);
+
+                    if (DataManager.getInstance().updateEmployee(employee) != null) {
+                        divider();
+                        System.out.println("Employee salary updated successfully");
+                        currentDateAndTime();
+                    } else {
+                        taskFailedMessage("Failed to update salary");
+                    }
                 } else {
-                    employeeDoesNotExist(id);
+                    employeeDoesNotExistMessage(id);
                 }
-            } catch (Exception e) {
-                // If error is caught then that means that the user chose to exit the loop of
-                // entering valid input
-                doesEmployeeExist = true;
+            } catch (MenuExitedException mee) {
+                menuExitedMessage(mee.getMessage());
+
+                break;
             }
         }
     }

@@ -1,6 +1,11 @@
+package managers;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
+
+import tasks.*;
+import models.Employee;
 
 /**
  * Manages employee data within a Company Management System, allowing
@@ -27,42 +32,42 @@ public class CompanyManager {
      * selection until the user chooses to exit.
      */
     public static void start(Scanner scanner) {
-        int option = -1;
-        Executor currentTask = null;
+        String option = "";
+        Task currentTask = null;
 
         menuHeader();
 
-        while (option != 0) {
+        while (!option.equals("0")) {
             currentTask = null;
             option = promptForMenuOption(scanner);
 
             switch (option) {
-                case 0:
+                case "0":
                     menuExited();
                     break;
-                case 1:
+                case "1":
                     currentTask = new AddEmployeeTask(scanner);
                     break;
-                case 2:
+                case "2":
                     currentTask = new RemoveEmployeeTask(scanner);
                     break;
-                case 3:
+                case "3":
                     currentTask = new UpdateRoleTask(scanner);
                     break;
-                case 4:
+                case "4":
                     currentTask = new UpdateSalaryTask(scanner);
                     break;
-                case 5:
+                case "5":
                     displayEmployeeList();
                     break;
-                case 6:
+                case "6":
                     displaySalaryReport();
                     break;
                 default:
                     invalidInput();
             }
 
-            if (currentTask != null) {
+            if (Objects.nonNull(currentTask)) {
                 currentTask.execute();
             }
         }
@@ -84,12 +89,13 @@ public class CompanyManager {
      * 
      * @return the integer selected by the user representing the chosen menu option
      */
-    private static int promptForMenuOption(Scanner scanner) {
+    private static String promptForMenuOption(Scanner scanner) {
         displayMenu();
 
-        // TODO: Validate input (should only be an int)
-        int option = scanner.nextInt();
+        String option = scanner.next().toLowerCase();
         scanner.nextLine();
+
+        System.out.println();
 
         return option;
     }
@@ -98,7 +104,7 @@ public class CompanyManager {
      * Displays the main menu options for the user.
      */
     private static void displayMenu() {
-        System.out.println("0 - Exit");
+        System.out.println("\n0 - Exit");
         System.out.println("1 - Add Employee");
         System.out.println("2 - Remove Employee");
         System.out.println("3 - Update Employee Role");
@@ -160,7 +166,7 @@ public class CompanyManager {
         dashDivider();
 
         if (employeeList.size() == 0) {
-            System.out.printf("|%-22sNo employees in list%-19s|\n", " ", " ");
+            System.out.printf("|%-22sNo employees in list%-21s|\n", " ", " ");
         } else {
             for (Employee employee : employeeList) {
                 employee.tableRow();

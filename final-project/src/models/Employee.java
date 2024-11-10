@@ -1,10 +1,12 @@
+package models;
+
 /**
  * Represents an employee within the Company Management System,
  * storing details such as ID, name, salary, and role. Includes
  * methods for accessing and modifying employee attributes, as
  * well as overrides for string representation and equality checks.
  */
-class Employee {
+public class Employee {
     /**
      * Unique identifier for the employee.
      */
@@ -51,6 +53,13 @@ class Employee {
         this.employeeName = employeeName;
         this.role = role;
         this.salary = salary;
+    }
+
+    public Employee(Employee employee) {
+        this.employeeID = employee.getEmployeeID();
+        this.employeeName = employee.getEmployeeName();
+        this.role = employee.getRole();
+        this.salary = employee.getSalary();
     }
 
     /**
