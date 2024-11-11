@@ -6,7 +6,20 @@ import models.Employee;
 import exceptions.MenuExitedException;
 import managers.DataManager;
 
+/**
+ * Task for updating the role of an employee in the employee list. This class
+ * extends the abstract Task class and provides functionality to prompt the
+ * user for an employee ID and update the employee's role if found.
+ * 
+ * @author Ryan Pallas
+ *         created on 11/11/24
+ */
 public class UpdateRoleTask extends Task {
+    /**
+     * Constructs an UpdateRoleTask with the specified Scanner for user input.
+     *
+     * @param scanner the Scanner object used to read user input
+     */
     public UpdateRoleTask(Scanner scanner) {
         super(scanner);
     }

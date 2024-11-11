@@ -6,7 +6,20 @@ import exceptions.MenuExitedException;
 import managers.DataManager;
 import models.Employee;
 
+/**
+ * Task for updating the salary of an employee in the employee list. This class
+ * extends the abstract Task class and provides functionality to prompt the
+ * user for an employee ID and update the employee's salary if found.
+ * 
+ * @author Ryan Pallas
+ *         created on 11/11/24
+ */
 public class UpdateSalaryTask extends Task {
+    /**
+     * Constructs an UpdateSalaryTask with the specified Scanner for user input.
+     *
+     * @param scanner the Scanner object used to read user input
+     */
     public UpdateSalaryTask(Scanner scanner) {
         super(scanner);
     }
@@ -14,7 +27,7 @@ public class UpdateSalaryTask extends Task {
     /**
      * Executes the update salary operation. Prompts the user to enter an employee
      * ID, verifies if an employee with that ID exists, and updates their salary
-     * if found by prompting the user for a new salary.
+     * if found by prompting the user for a new salary amount.
      */
     @Override
     public void execute() {

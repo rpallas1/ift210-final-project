@@ -5,6 +5,9 @@ package models;
  * storing details such as ID, name, salary, and role. Includes
  * methods for accessing and modifying employee attributes, as
  * well as overrides for string representation and equality checks.
+ * 
+ * @author Ryan Pallas
+ *         created on 11/11/24
  */
 public class Employee {
     /**
@@ -55,6 +58,12 @@ public class Employee {
         this.salary = salary;
     }
 
+    /**
+     * Copy constructor that creates a new Employee object by copying the details
+     * from another Employee.
+     * 
+     * @param employee the Employee object to copy
+     */
     public Employee(Employee employee) {
         this.employeeID = employee.getEmployeeID();
         this.employeeName = employee.getEmployeeName();

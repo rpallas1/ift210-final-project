@@ -8,22 +8,59 @@ import exceptions.InputException;
 import exceptions.MenuExitedException;
 import helpers.InputValidator;
 
+/**
+ * An abstract base class representing a task in the Company Management System.
+ * Provides common methods for prompting user input, validating input, and
+ * displaying messages. Subclasses must implement the abstract execute method to
+ * define specific task behavior.
+ * <p>
+ * This class is designed to handle input prompts, validation, and common
+ * messaging
+ * functionalities such as displaying success/failure messages,
+ * employee-not-found
+ * alerts, and system time output.
+ * </p>
+ * 
+ * @author Ryan Pallas
+ *         created on 11/11/24
+ */
 public abstract class Task {
     private Scanner scanner;
 
+    /**
+     * Constructs a Task with the specified Scanner for user input.
+     * <p>
+     * The provided Scanner is used to read user input for the task.
+     * </p>
+     * 
+     * @param scanner the Scanner object used to read user input
+     */
     public Task(Scanner scanner) {
         this.scanner = scanner;
     }
 
+    /**
+     * Executes the specific task action. Must be implemented by subclasses.
+     * <p>
+     * This method should define the behavior of the task, which will vary based
+     * on the specific task subclass.
+     * </p>
+     */
     public abstract void execute();
 
     /**
-     * Prompts the user to enter a valid ID for a Employee and will continue to
-     * prompt them until a valid ID is entered or they exit to the main menu.
+     * Prompts the user to enter a valid employee ID and validates it,
+     * continuing to prompt until a valid ID is entered or the user opts to exit
+     * to the main menu.
+     * <p>
+     * The method uses the {@link InputValidator} to ensure the ID is valid
+     * (non-empty and no whitespace).
+     * </p>
      * 
-     * @param message
-     * @return
-     * @throws Exception
+     * @param message the prompt message displayed to the user
+     * @return a validated employee ID
+     * @throws MenuExitedException if the user exits to the main menu by entering
+     *                             "q"
      */
     protected String promptForId(String message) throws MenuExitedException {
         String id = "";
@@ -47,12 +84,17 @@ public abstract class Task {
     }
 
     /**
-     * Prompts the user for a valid name and will continue to prompt them until a
-     * valid name is entered or they exit to the main menu.
+     * Prompts the user to enter a valid employee name and validates it,
+     * continuing to prompt until a valid name is entered or the user exits.
+     * <p>
+     * The method uses the {@link InputValidator} to ensure the name is valid
+     * (non-empty and contains no numbers).
+     * </p>
      * 
-     * @param message
-     * @return
-     * @throws Exception
+     * @param message the prompt message displayed to the user
+     * @return a validated employee name
+     * @throws MenuExitedException if the user exits to the main menu by entering
+     *                             "q"
      */
     protected String promptForName(String message) throws MenuExitedException {
         String name = "";
@@ -76,12 +118,17 @@ public abstract class Task {
     }
 
     /**
-     * Prompts the user for a valid role and will continue to prompt them until a
-     * valid role is entered or they exit to the main menu.
+     * Prompts the user to enter a valid role and validates it,
+     * continuing to prompt until a valid role is entered or the user exits.
+     * <p>
+     * The method uses the {@link InputValidator} to ensure the role is valid
+     * (non-empty).
+     * </p>
      * 
-     * @param message
-     * @return
-     * @throws Exception
+     * @param message the prompt message displayed to the user
+     * @return a validated employee role
+     * @throws MenuExitedException if the user exits to the main menu by entering
+     *                             "q"
      */
     protected String promptForRole(String message) throws MenuExitedException {
         String role = "";
@@ -105,12 +152,17 @@ public abstract class Task {
     }
 
     /**
-     * Prompts the user for a valid salary and will continue to prompt them until a
-     * valid salary is entered or they exit to the main menu.
+     * Prompts the user to enter a valid salary and validates it,
+     * continuing to prompt until a valid salary is entered or the user exits.
+     * <p>
+     * The method uses the {@link InputValidator} to ensure the salary is valid
+     * (a non-negative number).
+     * </p>
      * 
-     * @param message
-     * @return
-     * @throws Exception
+     * @param message the prompt message displayed to the user
+     * @return a validated salary as a Double
+     * @throws MenuExitedException if the user exits to the main menu by entering
+     *                             "q"
      */
     protected Double promptForSalary(String message) throws MenuExitedException {
         String salary = "";
@@ -145,12 +197,22 @@ public abstract class Task {
         divider();
     }
 
+    /**
+     * Displays a formatted exit message.
+     *
+     * @param message the message to be displayed upon exit
+     */
     protected void menuExitedMessage(String message) {
         divider();
         System.out.println(message);
         divider();
     }
 
+    /**
+     * Displays a failure message for a task.
+     *
+     * @param message the message to be displayed upon task failure
+     */
     protected void taskFailedMessage(String message) {
         divider();
         System.out.println(message);
@@ -175,9 +237,11 @@ public abstract class Task {
 
     /**
      * Returns the current date and time as a formatted string.
+     * <p>
+     * The date and time is formatted in the "MM/dd/yyyy HH:mm:ss" format.
+     * </p>
      * 
-     * @return a String representing the current date and time in the format
-     *         "MM/dd/yyyy HH:mm:ss"
+     * @return a String representing the current date and time
      */
     private String getDateAndTime() {
         Date date = new Date();
@@ -186,6 +250,13 @@ public abstract class Task {
         return currentDate;
     }
 
+    /**
+     * Prepares the prompt message by trimming whitespace and appending
+     * instructions to return to the main menu.
+     *
+     * @param message the original message
+     * @return the modified message with additional instructions
+     */
     private String prepMessage(String message) {
         return message.trim() + " (Enter q to return to menu): ";
     }

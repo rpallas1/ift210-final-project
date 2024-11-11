@@ -12,6 +12,9 @@ import models.Employee;
  * for operations such as adding, removing, updating, and displaying
  * employee information. Contains the main menu logic and calls various
  * prompts and message displays.
+ * 
+ * @author Ryan Pallas
+ *         created on 11/11/24
  */
 public class CompanyManager {
     /**
@@ -30,6 +33,8 @@ public class CompanyManager {
     /**
      * Starts the main program loop, displaying menu options and handling user
      * selection until the user chooses to exit.
+     *
+     * @param scanner the Scanner object for reading user input.
      */
     public static void start(Scanner scanner) {
         String option = "";
@@ -86,13 +91,14 @@ public class CompanyManager {
 
     /**
      * Prompts the user to select a menu option by displaying available options.
-     * 
-     * @return the integer selected by the user representing the chosen menu option
+     *
+     * @param scanner the Scanner object for reading user input.
+     * @return the selected menu option as a lowercase String.
      */
     private static String promptForMenuOption(Scanner scanner) {
         displayMenu();
 
-        String option = scanner.next().toLowerCase();
+        String option = scanner.next().toLowerCase().trim();
         scanner.nextLine();
 
         System.out.println();
@@ -101,7 +107,8 @@ public class CompanyManager {
     }
 
     /**
-     * Displays the main menu options for the user.
+     * Displays the main menu options for the user, listing available
+     * actions within the application.
      */
     private static void displayMenu() {
         System.out.println("\n0 - Exit");
@@ -159,7 +166,10 @@ public class CompanyManager {
     }
 
     /**
-     * Displays a table of employee information with ID, name, role, and salary.
+     * Displays a table of employee information including ID, name, role, and
+     * salary.
+     *
+     * @param employeeList an ArrayList of Employee objects to display in the table.
      */
     private static void employeeTable(ArrayList<Employee> employeeList) {
         tableRow("ID", "Name", "Role", "Salary");

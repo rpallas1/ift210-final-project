@@ -6,7 +6,20 @@ import models.Employee;
 import exceptions.MenuExitedException;
 import managers.DataManager;
 
+/**
+ * Task for adding a new employee to the employee list. This class extends the
+ * abstract Task class and provides functionality to prompt the user for
+ * employee details and add the employee to the data manager.
+ * 
+ * @author Ryan Pallas
+ *         created on 11/11/24
+ */
 public class AddEmployeeTask extends Task {
+    /**
+     * Constructs an AddEmployeeTask with the specified Scanner for user input.
+     *
+     * @param scanner the Scanner object used to read user input
+     */
     public AddEmployeeTask(Scanner scanner) {
         super(scanner);
     }
@@ -14,7 +27,7 @@ public class AddEmployeeTask extends Task {
     /**
      * Executes the add employee operation. This method prompts the user to
      * create a new employee by entering an ID, name, salary, and role. If
-     * the creation is successful, the employee is added to the employee list.
+     * the employee is successfully created, it is added to the employee list.
      */
     @Override
     public void execute() {
@@ -35,11 +48,11 @@ public class AddEmployeeTask extends Task {
 
     /**
      * Creates and returns a new Employee object by prompting the user for
-     * a unique ID, name, salary, and role. If the ID is not unique or if the
-     * user decides to cancel, this method returns null.
+     * a unique ID, name, salary, and role. If the
+     * user decides to cancel, this method throws.
      * 
-     * @return a new Employee object, or null if the user cancels or ID is not
-     *         unique
+     * @return a new Employee object
+     * @throws MenuExitedException if the user exits to the main menu
      */
     private Employee createEmployee() throws MenuExitedException {
         Employee employee = new Employee(
@@ -53,9 +66,10 @@ public class AddEmployeeTask extends Task {
 
     /**
      * Prompts the user to enter a unique employee ID and validates its uniqueness.
-     * Allows the user to enter "0" to exit without providing an ID.
-     * 
-     * @return a unique employee ID, or null if the user decides to exit
+     * Continues to prompt until a unique ID is entered or the user decides to exit.
+     *
+     * @return a unique employee ID
+     * @throws MenuExitedException if the user exits to the main menu
      */
     private String askForUniqueId() throws MenuExitedException {
         String promptMessage = "Enter a unique id";
