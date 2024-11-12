@@ -98,8 +98,7 @@ public class CompanyManager {
     private static String promptForMenuOption(Scanner scanner) {
         displayMenu();
 
-        String option = scanner.next().toLowerCase().trim();
-        scanner.nextLine();
+        String option = scanner.nextLine().trim().toLowerCase();
 
         System.out.println();
 

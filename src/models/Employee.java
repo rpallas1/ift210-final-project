@@ -31,22 +31,19 @@ public class Employee {
     private double salary;
 
     /**
+     * Constructs an employee with the specified ID that will be used to compare
+     * equality to other employees
      * 
-     */
-    public Employee() {
-    }
-
-    /**
-     * @param id
+     * @param id the unique ID for the employee
      */
     public Employee(String id) {
-        employeeID = id;
+        this(id, "", "", -1);
     }
 
     /**
      * Constructs an employee with the specified ID, name, salary, and role.
      * 
-     * @param employeeID   the unique identifier for the employee
+     * @param employeeID   the unique ID for the employee
      * @param employeeName the full name of the employee
      * @param salary       the salary of the employee
      * @param role         the role or job title of the employee

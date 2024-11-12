@@ -84,8 +84,11 @@ public class InputValidator {
     /**
      * Validates a role string.
      * <p>
-     * The role is first trimmed and checked to ensure it is not empty.
-     * If the user enters "q", the menu exit exception is triggered.
+     * The role is first trimmed and checked for the following conditions:
+     * <ul>
+     * <li>It must not be empty.</li>
+     * <li>If the user enters "q", the menu exit exception is triggered.</li>
+     * </ul
      * </p>
      * 
      * @param role the role string to validate.
@@ -105,9 +108,12 @@ public class InputValidator {
     /**
      * Validates a salary string.
      * <p>
-     * The salary is first checked to see if it can be parsed as a double. It must
-     * also be
-     * a non-negative value.
+     * The salary is checked for the following conditions:
+     * <ul>
+     * <li>It must be able to be parsed to a Double</li>
+     * <li>It must be a non-negative value</li>
+     * <li>If the user enters "q", the menu exit exception is triggered.</li>
+     * </ul>
      * </p>
      * 
      * @param salary the salary string to validate.
