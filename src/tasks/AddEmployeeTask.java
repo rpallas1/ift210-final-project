@@ -7,12 +7,13 @@ import exceptions.MenuExitedException;
 import managers.DataManager;
 
 /**
+ * Class Name: IFT210
+ * Author: Ryan Pallas
+ * Date: 2024-11-11
+ * 
  * Task for adding a new employee to the employee list. This class extends the
  * abstract Task class and provides functionality to prompt the user for
  * employee details and add the employee to the data manager.
- * 
- * @author Ryan Pallas
- *         created on 11/11/24
  */
 public class AddEmployeeTask extends Task {
     /**
@@ -74,15 +75,13 @@ public class AddEmployeeTask extends Task {
     private String askForUniqueId() throws MenuExitedException {
         String promptMessage = "Enter a unique id";
         String id = promptForId(promptMessage);
-        boolean doesIdExist = doesEmployeeExist(id);
 
-        while (doesIdExist) {
+        while (doesIdExist(id)) {
             divider();
             System.out.printf("ID must be unique: %s\n", id);
             divider();
 
             id = promptForId(promptMessage);
-            doesIdExist = doesEmployeeExist(id);
         }
 
         return id;
@@ -94,7 +93,7 @@ public class AddEmployeeTask extends Task {
      * @param id the ID to check for existence in the employee list
      * @return true if an employee with the ID exists, false otherwise
      */
-    private boolean doesEmployeeExist(String id) {
+    private boolean doesIdExist(String id) {
         return (DataManager.getInstance().doesEmployeeExist(id) != null);
     }
 }

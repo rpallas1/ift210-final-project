@@ -1,6 +1,10 @@
 package exceptions;
 
 /**
+ * Class Name: IFT210
+ * Author: Ryan Pallas
+ * Date: 2024-11-11
+ * 
  * Custom exception class that is thrown when there is an issue with user input.
  * <p>
  * This exception extends the {@link Exception} class and is used to signal
@@ -9,9 +13,6 @@ package exceptions;
  * to provide
  * additional details about the nature of the input issue.
  * </p>
- * 
- * @author Ryan Pallas
- *         created on 11/11/24
  */
 public class InputException extends Exception {
     public InputException(String message) {

@@ -7,12 +7,13 @@ import exceptions.MenuExitedException;
 import managers.DataManager;
 
 /**
+ * Class Name: IFT210
+ * Author: Ryan Pallas
+ * Date: 2024-11-11
+ * 
  * Task for removing an employee from the employee list. This class extends the
  * abstract Task class and provides functionality to prompt the user for an
  * employee ID and remove the corresponding employee if found.
- * 
- * @author Ryan Pallas
- *         created on 11/11/24
  */
 public class RemoveEmployeeTask extends Task {
     /**

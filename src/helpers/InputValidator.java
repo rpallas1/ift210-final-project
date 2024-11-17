@@ -2,10 +2,13 @@ package helpers;
 
 import java.util.regex.Pattern;
 
-import exceptions.InputException;
-import exceptions.MenuExitedException;
+import exceptions.*;
 
 /**
+ * Class Name: IFT210
+ * Author: Ryan Pallas
+ * Date: 2024-11-11
+ * 
  * A utility class for validating user input in various fields.
  * <p>
  * This class provides methods for validating input such as IDs, names, roles,
@@ -14,9 +17,6 @@ import exceptions.MenuExitedException;
  * patterns, and handling
  * special cases such as menu exit commands.
  * </p>
- * 
- * @author Ryan Pallas
- *         created on 11/11/24
  */
 public class InputValidator {
     /**

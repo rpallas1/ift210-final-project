@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import models.Employee;
 
 /**
+ * Class Name: IFT210
+ * Author: Ryan Pallas
+ * Date: 2024-11-11
+ * 
  * Manages employee data and operations on the employee list. DataManager is a
  * singleton class, allowing a single instance to manage all employee-related
  * data and actions within the application.
- * 
- * @author Ryan Pallas
- *         created on 11/11/24
  */
 public class DataManager {
     private static DataManager instance = null;
@@ -79,7 +80,7 @@ public class DataManager {
      * Searches for an employee by their ID in the employee list.
      *
      * @param id the ID of the employee to search for
-     * @return a copy of them Employee with the specified ID, or null if no employee
+     * @return a copy of the Employee with the specified ID, or null if no employee
      *         is found
      */
     public Employee doesEmployeeExist(String id) {
@@ -118,7 +119,8 @@ public class DataManager {
     }
 
     /**
-     * Retrieves a copy of the employee list sorted by salary.
+     * Retrieves a copy of the employee list sorted by salary from highest to
+     * lowest.
      * 
      * @return an ArrayList<Employee> containing all employees
      */

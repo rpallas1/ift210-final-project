@@ -9,6 +9,10 @@ import exceptions.MenuExitedException;
 import helpers.InputValidator;
 
 /**
+ * Class Name: IFT210
+ * Author: Ryan Pallas
+ * Date: 2024-11-11
+ * 
  * An abstract base class representing a task in the Company Management System.
  * Provides common methods for prompting user input, validating input, and
  * displaying messages. Subclasses must implement the abstract execute method to
@@ -20,9 +24,6 @@ import helpers.InputValidator;
  * employee-not-found
  * alerts, and system time output.
  * </p>
- * 
- * @author Ryan Pallas
- *         created on 11/11/24
  */
 public abstract class Task {
     private Scanner scanner;
@@ -72,8 +73,7 @@ public abstract class Task {
         while (!isValid) {
             try {
                 System.out.print(message);
-                id = scanner.nextLine();
-                id = validator.validateId(id);
+                id = validator.validateId(scanner.nextLine());
                 isValid = true;
             } catch (InputException ie) {
                 System.out.printf(">>> Invalid ID - %s\n", ie.getMessage());
@@ -106,8 +106,7 @@ public abstract class Task {
         while (!isValid) {
             try {
                 System.out.print(message);
-                name = scanner.nextLine();
-                name = validator.validateName(name);
+                name = validator.validateName(scanner.nextLine());
                 isValid = true;
             } catch (InputException ie) {
                 System.out.printf(">>> Invalid name - %s\n", ie.getMessage());
@@ -140,8 +139,7 @@ public abstract class Task {
         while (!isValid) {
             try {
                 System.out.print(message);
-                role = scanner.nextLine();
-                role = validator.validateRole(role);
+                role = validator.validateRole(scanner.nextLine());
                 isValid = true;
             } catch (InputException ie) {
                 System.out.printf(">>> Invalid role - %s\n", ie.getMessage());
@@ -165,8 +163,7 @@ public abstract class Task {
      *                             "q"
      */
     protected Double promptForSalary(String message) throws MenuExitedException {
-        String salary = "";
-        double validatedSalary = -1;
+        double salary = -1;
         InputValidator validator = new InputValidator();
         boolean isValid = false;
 
@@ -175,15 +172,14 @@ public abstract class Task {
         while (!isValid) {
             try {
                 System.out.print(message);
-                salary = scanner.nextLine();
-                validatedSalary = validator.validateSalary(salary);
+                salary = validator.validateSalary(scanner.nextLine());
                 isValid = true;
             } catch (InputException ie) {
                 System.out.printf(">>> Invalid salary - %s\n", ie.getMessage());
             }
         }
 
-        return validatedSalary;
+        return salary;
     }
 
     /**

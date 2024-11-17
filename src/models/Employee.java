@@ -1,13 +1,14 @@
 package models;
 
 /**
+ * Class Name: IFT210
+ * Author: Ryan Pallas
+ * Date: 2024-11-11
+ * 
  * Represents an employee within the Company Management System,
  * storing details such as ID, name, salary, and role. Includes
  * methods for accessing and modifying employee attributes, as
  * well as overrides for string representation and equality checks.
- * 
- * @author Ryan Pallas
- *         created on 11/11/24
  */
 public class Employee {
     /**
@@ -31,7 +32,7 @@ public class Employee {
     private double salary;
 
     /**
-     * Constructs an employee with the specified ID that will be used to compare
+     * Constructs an Employee with the specified ID that will be used to compare
      * equality to other employees
      * 
      * @param id the unique ID for the employee
@@ -41,7 +42,7 @@ public class Employee {
     }
 
     /**
-     * Constructs an employee with the specified ID, name, salary, and role.
+     * Constructs an Employee with the specified ID, name, salary, and role.
      * 
      * @param employeeID   the unique ID for the employee
      * @param employeeName the full name of the employee
@@ -150,7 +151,7 @@ public class Employee {
      * @param salary the employee's salary
      */
     public void tableRow() {
-        System.out.printf("| %-10s | %-15s | %-15s | %-12.2f |\n", employeeID, employeeName, role, salary);
+        System.out.printf("| %-10s | %-15s | %-20s | %-12.2f |\n", employeeID, employeeName, role, salary);
     }
 
     /**

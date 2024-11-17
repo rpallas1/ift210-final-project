@@ -8,13 +8,14 @@ import tasks.*;
 import models.Employee;
 
 /**
- * Manages employee data within a Company Management System, allowing
- * for operations such as adding, removing, updating, and displaying
- * employee information. Contains the main menu logic and calls various
- * prompts and message displays.
+ * Class Name: IFT210
+ * Author: Ryan Pallas
+ * Date: 2024-11-11
  * 
- * @author Ryan Pallas
- *         created on 11/11/24
+ * Manages employee data within a Company Management System, allowing
+ * for tasks to be created such as adding, removing, and updating
+ * employee information. Contains the main menu logic and calls various
+ * prompts and message displays including all employee information.
  */
 public class CompanyManager {
     /**
@@ -36,7 +37,7 @@ public class CompanyManager {
      *
      * @param scanner the Scanner object for reading user input.
      */
-    public static void start(Scanner scanner) {
+    private static void start(Scanner scanner) {
         String option = "";
         Task currentTask = null;
 
@@ -84,6 +85,7 @@ public class CompanyManager {
     private static void menuHeader() {
         divider();
         System.out.println("Ryan Pallas - 1226061293");
+        System.out.println("Nikhit Gunturu - ID");
         divider();
         System.out.println("Company Management System");
         divider();
@@ -150,7 +152,8 @@ public class CompanyManager {
     }
 
     /**
-     * Displays a salary report with the total salary of all employees.
+     * Displays a salary report with the employees sorted by salary and a total
+     * salary of all employees.
      */
     private static void displaySalaryReport() {
         DataManager dataManager = DataManager.getInstance();
@@ -195,7 +198,7 @@ public class CompanyManager {
      * @param salary column header for salaries
      */
     private static void tableRow(String id, String name, String role, String salary) {
-        System.out.printf("| %-10s | %-15s | %-15s | %-12s |\n", id, name, role, salary);
+        System.out.printf("| %-10s | %-15s | %-20s | %-12s |\n", id, name, role, salary);
     }
 
     /**

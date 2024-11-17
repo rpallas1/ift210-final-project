@@ -1,6 +1,10 @@
 package exceptions;
 
 /**
+ * Class Name: IFT210
+ * Author: Ryan Pallas
+ * Date: 2024-11-11
+ * 
  * Custom exception class that is thrown when the user exits a menu.
  * <p>
  * This exception extends the {@link Exception} class and is used to signal that
@@ -8,9 +12,6 @@ package exceptions;
  * handle
  * menu exit events and provide meaningful messages regarding the exit status.
  * </p>
- * 
- * @author Ryan Pallas
- *         created on 11/11/24
  */
 public class MenuExitedException extends Exception {
     /**
