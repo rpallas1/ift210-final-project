@@ -2,7 +2,7 @@ package exceptions;
 
 /**
  * Class Name: IFT210
- * Author: Ryan Pallas
+ * Authors: Ryan Pallas and Nikhit Gunturu
  * Date: 2024-11-11
  * 
  * Custom exception class that is thrown when there is an issue with user input.

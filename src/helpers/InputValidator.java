@@ -6,7 +6,7 @@ import exceptions.*;
 
 /**
  * Class Name: IFT210
- * Author: Ryan Pallas
+ * Authors: Ryan Pallas and Nikhit Gunturu
  * Date: 2024-11-11
  * 
  * A utility class for validating user input in various fields.

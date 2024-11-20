@@ -9,7 +9,7 @@ import models.Employee;
 
 /**
  * Class Name: IFT210
- * Author: Ryan Pallas
+ * Authors: Ryan Pallas and Nikhit Gunturu
  * Date: 2024-11-11
  * 
  * Manages employee data within a Company Management System, allowing
@@ -85,7 +85,7 @@ public class CompanyManager {
     private static void menuHeader() {
         divider();
         System.out.println("Ryan Pallas - 1226061293");
-        System.out.println("Nikhit Gunturu - ID");
+        System.out.println("Nikhit Gunturu - 1224587897");
         divider();
         System.out.println("Company Management System");
         divider();
@@ -178,7 +178,7 @@ public class CompanyManager {
         dashDivider();
 
         if (employeeList.size() == 0) {
-            System.out.printf("|%-22sNo employees in list%-21s|\n", " ", " ");
+            System.out.printf("|%-22sNo employees in list%-26s|\n", " ", " ");
         } else {
             for (Employee employee : employeeList) {
                 employee.tableRow();
@@ -205,7 +205,7 @@ public class CompanyManager {
      * Displays a divider made of "-" characters.
      */
     private static void dashDivider() {
-        System.out.println("-".repeat(65));
+        System.out.println("-".repeat(70));
     }
 
     /**

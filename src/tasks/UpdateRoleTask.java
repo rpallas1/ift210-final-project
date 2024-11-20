@@ -8,7 +8,7 @@ import managers.DataManager;
 
 /**
  * Class Name: IFT210
- * Author: Ryan Pallas
+ * Authors: Ryan Pallas and Nikhit Gunturu
  * Date: 2024-11-11
  * 
  * Task for updating the role of an employee in the employee list. This class

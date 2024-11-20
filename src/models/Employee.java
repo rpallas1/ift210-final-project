@@ -2,7 +2,7 @@ package models;
 
 /**
  * Class Name: IFT210
- * Author: Ryan Pallas
+ * Authors: Ryan Pallas and Nikhit Gunturu
  * Date: 2024-11-11
  * 
  * Represents an employee within the Company Management System,

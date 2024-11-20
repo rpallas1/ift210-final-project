@@ -5,7 +5,7 @@ import models.Employee;
 
 /**
  * Class Name: IFT210
- * Author: Ryan Pallas
+ * Authors: Ryan Pallas and Nikhit Gunturu
  * Date: 2024-11-11
  * 
  * Manages employee data and operations on the employee list. DataManager is a

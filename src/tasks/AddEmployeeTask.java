@@ -8,7 +8,7 @@ import managers.DataManager;
 
 /**
  * Class Name: IFT210
- * Author: Ryan Pallas
+ * Authors: Ryan Pallas and Nikhit Gunturu
  * Date: 2024-11-11
  * 
  * Task for adding a new employee to the employee list. This class extends the
