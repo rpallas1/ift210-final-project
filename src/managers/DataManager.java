@@ -14,7 +14,7 @@ import models.Employee;
  */
 public class DataManager {
     private static DataManager instance = null;
-    private ArrayList<Employee> employeeList = new ArrayList<Employee>();
+    private ArrayList<Employee> employeeList = new ArrayList<>();
 
     /**
      * Private constructor to prevent instantiation from other classes.
